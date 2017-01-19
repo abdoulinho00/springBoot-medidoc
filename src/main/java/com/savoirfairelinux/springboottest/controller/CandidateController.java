@@ -10,9 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.savoirfairelinux.springboottest.beans.Candidate;
+import com.savoirfairelinux.springboottest.beans.Company;
+import com.savoirfairelinux.springboottest.beans.Interview;
 import com.savoirfairelinux.springboottest.service.CandidateService;
+import com.savoirfairelinux.springboottest.service.CompanyService;
+import com.savoirfairelinux.springboottest.service.InterviewService;
 
 @Controller
 public class CandidateController {
@@ -21,6 +27,11 @@ public class CandidateController {
 	
 	@Autowired
 	CandidateService candidateService;
+	@Autowired
+	CompanyService comapnyService;
+	@Autowired
+	InterviewService interviewService;
+	
 	
 	@RequestMapping(value= "/user")
 	public String getUserInfo(Model model){
@@ -41,5 +52,42 @@ public class CandidateController {
 		candidateService.addCandidate(candidate);
 		logger.info(candidate.getName());
 		return "redirect:/user";
+	}
+	
+	@RequestMapping("/user/view")
+	public String viewCandidate(@RequestParam("id") long id, Model model){
+		Candidate candidate = candidateService.getCandidate(id);
+		logger.info("candidate email : " + candidate.getEmail());
+		model.addAttribute("candidate", candidate);
+		
+		logger.info("number of interviews : " + candidate.getInterviews().size());
+		return "viewCandidate";
+	}
+	
+	
+	@RequestMapping("/user/addInterview")
+	public String addInterviewForm(@RequestParam("id") long id, Model model){
+		Candidate candidate = candidateService.getCandidate(id);
+		List<Company> companies = comapnyService.getCompanies();
+		
+		model.addAttribute("candidate", candidate);
+		model.addAttribute("companies", companies);
+		
+		return "addInterview";
+	}
+	
+	@RequestMapping(value = "/user/addInterview", method=RequestMethod.POST)
+	public String addInterview(@RequestParam("id") long id,@RequestParam("company_id") long companyId, @ModelAttribute Interview interview ){
+		
+		Candidate candidate = candidateService.getCandidate(id);
+		Company company = comapnyService.getCompay(companyId);
+		interview.setId(0);
+		interview.setUser(candidate);
+		interview.setCompany(company);
+		
+		interviewService.addInterview(interview);
+		
+		logger.info("interview : " + interview.getId() );
+		return "redirect:/user/view?id="+id;
 	}
 }

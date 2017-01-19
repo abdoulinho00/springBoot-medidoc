@@ -2,11 +2,12 @@ package com.savoirfairelinux.springboottest.beans;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Candidate {
@@ -18,7 +19,8 @@ public class Candidate {
 	private String lastname;
 	private String phoneNumber;
 	private String email;
-	@Transient
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<Interview> interviews;
 
 	public long getId() {

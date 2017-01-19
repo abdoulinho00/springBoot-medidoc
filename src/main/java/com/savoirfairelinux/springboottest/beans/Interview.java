@@ -2,14 +2,31 @@ package com.savoirfairelinux.springboottest.beans;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Interview {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private Date scheduledDate;
 	private String jobTitle;
 	private String jobUrl;
 	private String observations;
+	
+	@ManyToOne(optional=false) 
+    @JoinColumn(name="company_id", nullable=false, updatable=false)
 	private Company company;
+	
+	
+	@ManyToOne(optional=false) 
+    @JoinColumn(name="candidate_id", nullable=false, updatable=false)
 	private Candidate user;
 	public long getId() {
 		return id;

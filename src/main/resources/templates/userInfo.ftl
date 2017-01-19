@@ -13,6 +13,9 @@
    					<td>${candidate.id}</td>
    					<td>${candidate.name}</td>
    					<td>${candidate.lastname}</td>
+   					<td>${candidate.email}</td>
+   					<td>${candidate.phoneNumber}</td>
+   					<td><a href="/user/view?id=${candidate.id}">view</a></td>
    				</tr>
    			</#list>
    		</table>

@@ -33,10 +33,7 @@ public class CandidateServiceImpl implements CandidateService{
 	@Override
 	public Candidate getCandidate(long id) {
 		
-		Candidate user = new Candidate();
-		user.setName("abderrahmane");
-		user.setLastname("el bardai");
-		return user;
+		return dao.findOne(id);
 	}
 
 	@Override
