@@ -1,59 +1,62 @@
 <!DOCTYPE HTML>
 <html >
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<#include "/include/meta.ftl">
 <body>
-   <h1>Add candidate</h1>
-   <div>
-	<label>Name</label>
-	
-        <input type="text"
-            name="name"  value="${candidate.name}"  readonly
-            />
-       </div>    
-       <div> 
-        <label>Last Name</label>
-	
-        <input type="text"
-            name="lastname" value="${candidate.lastname}"  readonly
-            />
-           </div>
-       <div> 
-        <label>email</label>
-	
-        <input type="text"
-            name="email"  value="${candidate.email!"default"}"  readonly
-            />
-           </div>
-       <div> 
-        <label>Phone</label>
-	
-        <input type="text"
-            name="phoneNumber"  value="${candidate.phoneNumber!""}"  readonly
-            />
-           </div>
-           
-           <div>
+	<div class="container">
+		<#include "/include/header.ftl">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>Candidate details</b>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label>Name</label>
+					<input type="text" name="name" value="${candidate.name}" class="form-control" readonly >
+				</div>    
+				<div class="form-group">
+					<label>Last Name</label>
+					<input type="text" name="lastname" value="${candidate.lastname}" class="form-control" readonly>
+				</div>    
+				<div class="form-group">
+					<label>Email</label>
+					<input type="email" name="email"  value="${candidate.email}" class="form-control" readonly>
+				</div>    
+				<div class="form-group">
+					<label>Phone</label>
+					<input type="text" name="phoneNumber"  value="${candidate.phoneNumber}" class="form-control" readonly>
+				</div>
+				
            		<#if candidate.interviews??  && (candidate.interviews?size >= 1) >
-           			<table>
-           			<#list candidate.interviews as interview>
+           		<div>
+           			<label>Interviews</label>
+           			<table class="table table-striped">
            				<tr>
-           					<td>${interview.id}</td>
-           					<td>${interview.jobTitle}</td>
-           					<td>${interview.jobUrl}</td>
-           					<td>${interview.observations}</td>
+           					<th>#</th>
+           					<th>Job title</th>
+           					<th>Job URL</th>
+           					<th>Observations</th>
            				</tr>
-           			</#list>
+	           			<#list candidate.interviews as interview>
+	           				<tr>
+	           					<td>${interview.id}</td>
+	           					<td>${interview.jobTitle}</td>
+	           					<td>${interview.jobUrl}</td>
+	           					<td>${interview.observations}</td>
+	           				</tr>
+	           			</#list>
            			</table>
+           		</div>
            		<#else>
-           			you don't have any interview yet
+           		<div class="text-center">
+           			<span class="text-center">you don't have any interview yet</span>
+           		</div>
            		</#if>
-           </div>
-           
-           <a href="/user/addInterview?id=${candidate.id}">Click here to add an interview</a>
-   
+           		
+           		<a href="/user/addInterview?id=${candidate.id}">Click here to add an interview</a>
+           	</div>
+		</div>
+	</div>
+				   
 
 </body>
 </html>

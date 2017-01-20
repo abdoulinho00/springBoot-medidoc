@@ -1,48 +1,43 @@
 <!DOCTYPE HTML>
 <html >
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+
+<#include "/include/meta.ftl">
 <body>
-   <h1>Add Interview</h1>
-   <form  action="/user/addInterview" method="post">
-   <h3>Candidate : ${candidate.name} ${candidate.lastname} </h3>
-   <input type="hidden" value="${candidate.id}" name="id"/>
-   <div>
-	<label>jobTitle</label>
-	
-        <input type="text"
-            name="jobTitle" 
-            />
-       </div>    
-       <div> 
-        <label>jobUrl</label>
-	
-        <input type="text"
-            name="jobUrl" 
-            />
-           </div>
-       <div> 
-        <label>observations</label>
-	
-        <input type="text"
-            name="observations" 
-            />
-           </div>
-       <div> 
-        <label>Company</label>
-		<select name="company_id">
-			<#if companies??>
-			<#list companies as company>
-				<option value="${company.id}">${company.name}</option>
-			</#list>
-			</#if>
-		</select>
-           </div>
-       
-           
-            <button type="submit">Save</button>
-   </form>
+	<div class="container">
+		<#include "/include/header.ftl">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<b>Add interview for ${candidate.name} ${candidate.lastname}</b>
+			</div>
+			<div class="panel-body">
+				<form action="/user/addInterview" method="post">
+					<div class="form-group">
+						<label>Job title</label>
+						<input type="jobTitle" name="name" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>jobUrl</label>
+						<input type="text" name="jobUrl" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>observations</label>
+						<input type="jobTitle" name="observations" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Company</label>
+						<select name="company_id" class="form-control">
+							<#if companies??>
+								<#list companies as company>
+									<option value="${company.id}">${company.name}</option>
+								</#list>
+							</#if>
+						</select>
+					</div>
+					
+					<button type="submit" class="btn btn-default">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
