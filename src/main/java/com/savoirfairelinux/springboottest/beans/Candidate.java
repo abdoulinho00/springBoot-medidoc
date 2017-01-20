@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * 
+ * @author aelbardai
+ *
+ */
 @Entity
 public class Candidate {
 

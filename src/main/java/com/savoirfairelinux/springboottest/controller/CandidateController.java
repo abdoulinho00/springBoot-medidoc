@@ -19,11 +19,18 @@ import com.savoirfairelinux.springboottest.beans.Interview;
 import com.savoirfairelinux.springboottest.service.CandidateService;
 import com.savoirfairelinux.springboottest.service.CompanyService;
 import com.savoirfairelinux.springboottest.service.InterviewService;
+import com.savoirfairelinux.springboottest.util.AppKeys;
 
+/**
+ * 
+ * @author aelbardai
+ *
+ */
 @Controller
 public class CandidateController {
 	
 	private Log logger  = LogFactory.getLog(CandidateController.class);
+
 	
 	@Autowired
 	CandidateService candidateService;
@@ -32,21 +39,35 @@ public class CandidateController {
 	@Autowired
 	InterviewService interviewService;
 	
-	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value= "/user")
 	public String getUserInfo(Model model){
 
 		List<Candidate> candidates = candidateService.getCandidates();
 		model.addAttribute("candidates", candidates);
-		return "userInfo" ;
+		return AppKeys.CANDIDATELIST ;
 	}
 	
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/user/add")
 	public String addCandidate(Model model){
 		model.addAttribute("cadidate",new Candidate());
-		return "addCandidate";
+		return AppKeys.ADDCANDIDATE;
 	}
 	
+	/**
+	 * 
+	 * @param candidate
+	 * @return
+	 */
 	@PostMapping("/user/add")
 	public String addCandidateForm(@ModelAttribute Candidate candidate){
 		candidateService.addCandidate(candidate);
@@ -54,6 +75,12 @@ public class CandidateController {
 		return "redirect:/user";
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/user/view")
 	public String viewCandidate(@RequestParam("id") long id, Model model){
 		Candidate candidate = candidateService.getCandidate(id);
@@ -61,10 +88,15 @@ public class CandidateController {
 		model.addAttribute("candidate", candidate);
 		
 		logger.info("number of interviews : " + candidate.getInterviews().size());
-		return "viewCandidate";
+		return AppKeys.VIEWCANDIDATE;
 	}
 	
-	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/user/addInterview")
 	public String addInterviewForm(@RequestParam("id") long id, Model model){
 		Candidate candidate = candidateService.getCandidate(id);
@@ -73,9 +105,16 @@ public class CandidateController {
 		model.addAttribute("candidate", candidate);
 		model.addAttribute("companies", companies);
 		
-		return "addInterview";
+		return AppKeys.ADDINTERVIEW;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param companyId
+	 * @param interview
+	 * @return
+	 */
 	@RequestMapping(value = "/user/addInterview", method=RequestMethod.POST)
 	public String addInterview(@RequestParam("id") long id,@RequestParam("company_id") long companyId, @ModelAttribute Interview interview ){
 		

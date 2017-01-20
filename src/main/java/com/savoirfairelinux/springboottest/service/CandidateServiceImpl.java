@@ -11,6 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.savoirfairelinux.springboottest.beans.Candidate;
 import com.savoirfairelinux.springboottest.dao.CandidateDao;
 
+/**
+ * 
+ * @author aelbardai
+ *
+ */
 @Service
 @Transactional
 public class CandidateServiceImpl implements CandidateService{
@@ -45,7 +50,7 @@ public class CandidateServiceImpl implements CandidateService{
 
 	@Override
 	public void removeCandidate(long id) {
-		
+		dao.delete(id);
 	}
 
 }

@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.savoirfairelinux.springboottest.beans.Company;
 import com.savoirfairelinux.springboottest.dao.CompanyDao;
 
+/**
+ * 
+ * @author aelbardai
+ *
+ */
 @Service
 @Transactional
 public class CompanyServiceImpl implements CompanyService{
