@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,7 +71,13 @@ public class CandidateController {
 	 */
 	@PostMapping("/user/add")
 	public String addCandidateForm(@ModelAttribute Candidate candidate){
+		try{
 		candidateService.addCandidate(candidate);
+		}
+		catch(TransactionSystemException e ){
+			logger.info("Cannot finish transaction. check the service layer");
+			logger.debug(e);
+		}
 		logger.info(candidate.getName());
 		return "redirect:/user";
 	}
@@ -91,6 +98,40 @@ public class CandidateController {
 		return AppKeys.VIEWCANDIDATE;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/user/delete")
+	public String deleteCandidate(@RequestParam("id") long id){
+		
+		try{
+			candidateService.removeCandidate(id);
+		}
+		catch(Exception e){
+			logger.error("problem deleting user" , e);
+		}
+		return "redirect:/user";
+	}
+	
+	/**
+	 * 
+	 * @param candidate
+	 * @return
+	 */
+	@RequestMapping(value = "/user/view" , method=RequestMethod.POST)
+	public String updateCandidate(@ModelAttribute Candidate candidate){
+		try{
+			candidateService.updateCandidate(candidate);
+			}
+			catch(TransactionSystemException e ){
+				logger.info("Cannot finish transaction. check the service layer");
+				logger.debug(e);
+			}
+			logger.info(candidate.getName());
+		return "redirect:/user";
+	}
 	/**
 	 * 
 	 * @param id

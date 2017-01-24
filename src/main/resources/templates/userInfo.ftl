@@ -26,15 +26,25 @@
 								<td>${candidate.lastname}</td>
 								<td>${candidate.email}</td>
 								<td>${candidate.phoneNumber}</td>
-								<td><a href="/user/view?id=${candidate.id}">view</a></td>
+								<td>
+									<a href="/user/view?id=${candidate.id}" class="actionLinks"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+									<a href="/user/view?id=${candidate.id}&edit=true" class="actionLinks"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+									<a href="/user/delete?id=${candidate.id}" class="actionLinks" onclick="return confirm('Are you sure you want to delete?');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+								</td>
 							</tr>
 						</#list>
 					</table>
 				</#if>   
-			<a href="/user/add">Add candidate</a>
+			<a href="/user/add" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add candidate</a>
 			</div>
 		</div>
 
 	</div>
+<script>
+	$('#removeDialog').click(function(){
+    return confirm("Are you sure you want to delete?");
+})
+</script>
 </body>
+
 </html>

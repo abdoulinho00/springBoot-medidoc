@@ -1,0 +1,4 @@
+---
+applications:
+- name: springboot-test
+  path: target/spring-boot-test-v1.0.jar

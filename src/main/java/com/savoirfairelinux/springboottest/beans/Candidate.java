@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 
  * @author aelbardai
@@ -20,9 +23,12 @@ public class Candidate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String lastname;
 	private String phoneNumber;
+	@Email
 	private String email;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
